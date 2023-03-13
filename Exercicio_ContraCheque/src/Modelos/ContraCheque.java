@@ -30,38 +30,43 @@ public class ContraCheque {
     }
 
     public int getMatricula() throws Exception {
-        if(matricula <= 0)throw new Exception("Matricula deve ser maior que zero!");
+        if(matricula <= 0)throw new Exception("Matricula Invalida!");
         return matricula;
     }
 
     public void setMatricula(int matricula)throws Exception{
-        if(matricula <= 0)throw new Exception("Matricula deve ser maior que zero!");
+        if(matricula <= 0)throw new Exception("Matricula Invalida!");
         this.matricula = matricula;
     }
 
-    public int getNumeroDeDependentes() {
+    public int getNumeroDeDependentes()throws Exception {
+        
+        if(numeroDeDependentes < 0) throw new Exception("Numero de dependentes invalido!");
         return numeroDeDependentes;
     }
 
-    public void setNumeroDeDependentes(int numeroDeDependentes) {
+    public void setNumeroDeDependentes(int numeroDeDependentes)throws Exception {
+        if(numeroDeDependentes < 0) throw new Exception("Numero de dependentes invalido!");
         this.numeroDeDependentes = numeroDeDependentes;
     }
 
     public float getSalarioBase()throws Exception{
-        if(salarioBase <=0) throw new Exception("Salario deve ser maior que zero");
+        if(salarioBase <=0) throw new Exception("Salario Invalido");
         return salarioBase;
     }
 
     public void setSalarioBase(float salarioBase)throws Exception{
-         if(salarioBase <=0) throw new Exception("Salario deve ser maior que zero");
+         if(salarioBase <=0) throw new Exception("Salario Invalido");
         this.salarioBase = salarioBase;
     }
 
-    public int getProducao() {
+    public int getProducao()throws Exception {
+        if(producao <= 0) throw new Exception("Digite Produção do funcionario maior que zero!");
         return producao;
     }
 
-    public void setProducao(int producao) {
+    public void setProducao(int producao)throws Exception {
+        if(producao <= 0) throw new Exception("Digite Produção do funcionario maior que zero!");
         this.producao = producao;
     }
     
@@ -72,11 +77,16 @@ public class ContraCheque {
             float salarioBase, int producao)throws Exception{
         
         this.nome = nome;
-        if(matricula <= 0)throw new Exception("Matricula deve ser maior que zero!");
+         if(matricula <= 0)throw new Exception("Matricula Invalida!");
         this.matricula = matricula;
+        
+         if(numeroDeDependentes < 0) throw new Exception("Numero de dependentes invalido!");
         this.numeroDeDependentes = numeroDeDependentes;
+        
+         if(producao <= 0) throw new Exception("Digite Produção do funcionario maior que zero!");
         this.producao = producao;
-         if(salarioBase <=0) throw new Exception("Salario deve ser maior que zero");
+        
+         if(salarioBase <=0) throw new Exception("Salario Invalido");
         this.salarioBase = salarioBase;
     }
     
@@ -84,10 +94,7 @@ public class ContraCheque {
     
     public float calcularSalarioBruto(){
         float gratificacao = valorGratificacao();
-        if(producao <=1000) return  (float) (salarioBase + gratificacao);
-        if(producao <= 2000) return (float)(salarioBase + gratificacao);
-        if(producao > 2000) return  (float) (salarioBase + gratificacao);
-        return calcularSalarioBruto();
+        return  (float) (salarioBase + gratificacao);
     }
     // Metodo para calcular INSS
     
@@ -96,8 +103,8 @@ public class ContraCheque {
         if(salarioBruto <= 1302.00) return (float) (salarioBruto * 0.075);
         if(salarioBruto <= 2571.29) return (float)(salarioBruto * 0.090);
         if (salarioBruto <= 3856.94) return (float)(salarioBruto * 0.12);
-        if(salarioBruto > 3856.94) return (float) (salarioBruto * 0.14);
-        return calcularDescontoInss();
+        return (float) (salarioBruto * 0.14);
+       
     }
      // Metodo para calcular dsconto de dependentes
     
@@ -110,12 +117,16 @@ public class ContraCheque {
     public float calcularDescontoIrpf(){
         float salarioBruto = calcularSalarioBruto();
         float descontoDependente = calcularDescontoDependentes();
+        float imposto = 0;
         if(salarioBruto <= 1903.98) return 0;
-        if(salarioBruto <= 2826.65) return(float) (salarioBruto  * 0.075 - descontoDependente);
-        if(salarioBruto <= 3751.05)  return(float) (salarioBruto   * 0.15 - descontoDependente);
-        if(salarioBruto <= 4664.68) return(float) (salarioBruto  * 0.22 - descontoDependente );
-        if(salarioBruto > 4664.68) return(float) (salarioBruto  * 0.275  - descontoDependente);
-        return calcularDescontoIrpf();
+        else if(salarioBruto <= 2826.65) { imposto = (float) (salarioBruto  * 0.075 - descontoDependente);}
+        else if(salarioBruto <= 3751.05) { imposto = (float) (salarioBruto   * 0.15 - descontoDependente);}
+        else if(salarioBruto <= 4664.68) { imposto = (float) (salarioBruto  * 0.22 - descontoDependente );}
+        else if (salarioBruto > 4664.68) { imposto = (float) (salarioBruto  * 0.275  - descontoDependente);}
+        if(imposto < 0){ return 0;}
+        else{
+        return imposto;}
+        
     }
     
    
@@ -126,7 +137,7 @@ public class ContraCheque {
         float salarioBruto = calcularSalarioBruto();
         float inss = calcularDescontoInss();
         float imposto = calcularDescontoIrpf();
-         return salarioBruto - inss - imposto;
+        return salarioBruto - inss - imposto;
         
     }
     
@@ -136,7 +147,7 @@ public class ContraCheque {
         if(producao <=1000) return  (float) 500.00;
         if(producao <= 2000) return (float) 1250.00;
         if(producao > 2000) return  (float) 2250.00;
-        return valorGratificacao();
+        return 0;
     }
     
 }

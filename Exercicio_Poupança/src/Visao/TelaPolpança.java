@@ -323,17 +323,15 @@ public class TelaPolpança extends javax.swing.JFrame {
     //Criar conta
     
     private void jButton_CriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CriarContaActionPerformed
+      //Tratamento de excessões
         try {
             conta = new Poupanca(
                     jTextField_Nome.getText(),
-                    Integer.parseInt(jTextField_Agencia.getText()),
-                  Integer.parseInt(jTextField_NumeroDaConta.getText())  ,
+                    Integer.parseInt(jTextField_NumeroDaConta.getText()),
+                  Integer.parseInt(jTextField_Agencia.getText())  ,
                    Float.parseFloat(jTextField_DepositoInicial.getText()));
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-        
-        // Habilitando Botoes
+            
+            // Habilitando Botoes
         jButton_Depositar.setEnabled(true);
         jButton_Extrato.setEnabled(true);
         jButton_Saldo.setEnabled(true);
@@ -344,13 +342,24 @@ public class TelaPolpança extends javax.swing.JFrame {
         
         //Mensagem para conta criada
         jTextArea_Saida.setText("Conta Criada com sucesso!");
+        } catch (Exception erro) {
+            
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+        
+        
     }//GEN-LAST:event_jButton_CriarContaActionPerformed
  
 // Botao Depositar
     
     private void jButton_DepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DepositarActionPerformed
         // TODO add your handling code here:
-        conta.depositarDinheiro(Float.parseFloat(jTextField_Deposito.getText()));
+        try {
+            conta.depositarDinheiro(Float.parseFloat(jTextField_Deposito.getText()));
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+        
     }//GEN-LAST:event_jButton_DepositarActionPerformed
 
     //Botao Saldo
@@ -363,21 +372,36 @@ public class TelaPolpança extends javax.swing.JFrame {
     
     private void jButton_ExtratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExtratoActionPerformed
         // TODO add your handling code here:
+        //Tratamento de Excessões
+        try {
         String saida = "Extrato da Conta \n";
         saida += "Cliente: "+conta.getNomeDoCliente()+"\n";
         saida += "Agencia: "+conta.getAgencia()+"\n";
         saida+= "Conta: "+ conta.getNumeroDaConta()+"\n";
         saida += "Saldo: "+conta.getSaldo()+"\n";
         
+        // Saida de dados
         jTextArea_Saida.setText(saida);
         
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this,erro.getMessage());
+        }
+       
     }//GEN-LAST:event_jButton_ExtratoActionPerformed
 
     //Saque
     
     private void jButton_SaqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaqueActionPerformed
         // TODO add your handling code here:
-        conta.sacarDinheiro(Float.parseFloat(jTextField_Saque.getText()) );
+        //Tratamento de excessções
+        try {
+           conta.sacarDinheiro(Float.parseFloat(jTextField_Saque.getText()) );  
+           
+        } catch (Exception erro) {
+            
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+      
     }//GEN-LAST:event_jButton_SaqueActionPerformed
 
     //Limpar

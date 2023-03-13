@@ -193,7 +193,7 @@ public class TelaContraCheque extends javax.swing.JFrame {
 
     private void jButton_ExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExecutarActionPerformed
         // TODO add your handling code here:
-        
+        // Tratamentos de excessões
         try {
             funcionario = new ContraCheque(
                     jTextField_Nome.getText(),

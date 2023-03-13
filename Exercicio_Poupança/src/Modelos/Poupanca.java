@@ -26,19 +26,23 @@ public class Poupanca {
         this.nomeDoCliente = nomeDoCliente;
     }
 
-    public int getNumeroDaConta() {
+    public int getNumeroDaConta()throws Exception {
+        if(numeroDaConta <= 0)throw new Exception("Numero da conta não pode ser <= 0") ;
         return numeroDaConta;
     }
 
-    public void setNumeroDaConta(int numeroDaConta) {
+    public void setNumeroDaConta(int numeroDaConta)throws Exception {
+         if(numeroDaConta <= 0)throw new Exception("Numero da conta não pode ser <= 0") ;
         this.numeroDaConta = numeroDaConta;
     }
 
-    public int getAgencia() {
+    public int getAgencia()throws Exception {
+        if(agencia <= 0) throw new Exception("Agencia não pode ser <=0");
         return agencia;
     }
 
-    public void setAgencia(int agencia) {
+    public void setAgencia(int agencia)throws Exception {
+        if(agencia <= 0) throw new Exception("Agencia não pode ser <=0");
         this.agencia = agencia;
     }
 
@@ -54,20 +58,31 @@ public class Poupanca {
     public Poupanca(String nomeDoCliente, int numeroDaConta, int agencia, float saldo)throws Exception{
         
         this.nomeDoCliente = nomeDoCliente;
+        
+        if(numeroDaConta <= 0)throw new Exception("Numero da conta não pode ser <= 0") ;
         this.numeroDaConta = numeroDaConta;
+        
+        if(agencia <= 0) throw new Exception("Agencia não pode ser <=0");
         this.agencia = agencia;
+        
         if(saldo < 1000)throw new Exception("Deposito para abertura de conta é R$ 1000,00");
         this.saldo = saldo;
     }
     //Metodos
     
     //Metodo sacar 
-    public float sacarDinheiro (float sacar){
+    public float sacarDinheiro (float sacar)throws Exception{
+        
+        if(sacar <= 0) throw new Exception("Valor invalido!");
+        if(sacar > saldo) throw new Exception("Saldo Insufuciente!");
       return  saldo -= sacar ;
+      
     }
     
     //Metodo depositar
-    public float depositarDinheiro(float deposito){
+    public float depositarDinheiro(float deposito)throws Exception{
+        
+        if(deposito <= 0) throw new Exception("Deposite um valor valido!");
        return saldo+= deposito;
     }
 }
